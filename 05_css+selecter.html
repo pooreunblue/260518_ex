@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CSS 선택자</title>
+        <style>
+            /* 태그 선택자 */
+            /* 태그명 {프로퍼티명: 프로퍼티값: } */
+            p {
+                color: gray;
+            }
+            /* 클래스 선택자 */
+            /* .클래스명 {프로퍼티명: 프로퍼티값: } */
+            .class-style {
+                color: red;
+            }
+            .class-style2 {
+                color: blue;
+            }
+
+            /* id 선택자 */
+            /* #id명 {프로퍼티명: 프로퍼티값: } */
+            #id-style {
+                color: yellow;
+            }
+            
+            .class-style3 {
+                color: green;
+            }
+            
+            .important {
+                color: pink; !important;
+            }
+
+            /* 아이디 선택자 */
+        </style>
+    </head>
+    <body>
+        <p>태그 선택자</p>
+        <!-- emmet -->
+        <!-- p.class-style -->
+        <p class="class-style">클래스 선택자</p>
+        <p class="class-style class-style2 class-style3">클래스 선택자</p>
+        <p id="id-style" class="class-style3">아이디 선택자</p>
+        <p style="color: brown;">스타일 속성</p>
+        <p style="color:brown class="class-style3 impotant;">스타일속성</p>
+    </body>
+</html>
