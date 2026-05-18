@@ -16,8 +16,34 @@
         <form>
             <!-- form으로 묶으면 하위 Input에서 enter치면 제출 처리(혹은 버튼 누르면)-->
             <!-- input에 name 안 붙여주면 주소창을 통해 전달 X -->
+            <form action="https://search.naver.com/search.naver" method="get"></form>
             <input /><br />
-            <input name="username" />
+            <!-- 유저이름 : <input name="username" /> 
+            비밀번호 : <input name="password" /> -->
+            <label for="username">유저이름 : </label><input name="username" id="username" /><br />
+            <label>유저이름 : <input name="username" /><br /
+            ></label><br />
+            <label for="password">비밀번호 : </label>
+            <input name="password"
+                id="password"
+                type="password"
+                placeholder="암호를 입력해주세요"/>
+            <p>암호를 입력해주세요</p>
+            <hr />
+            <!-- 큰 text input 여러줄 -->
+            <textarea name="long_text"></textarea>
+            <input type="radio" name="gender" /> 남성
+            <input type="radio" name="gender" /> 여성
+            <select name="city">
+                <option>서울</option>
+                <option>부산</option>
+            </select>
+            <input type="checkbox" name="hobby" value="1" />취미1
+            <input type="checkbox" name="hobby" value="2" />취미2
+            <!-- html5 -->
+            <input type="color" />
+            <input type="date" />
+            <
             <button>제출</button>
         </form>
     </body>
