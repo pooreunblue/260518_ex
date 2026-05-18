@@ -94,11 +94,160 @@
 
       body {
         font-family: "NoonnuBasicGothic", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f5f7;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      }
+
+      header {
+        border-bottom: 2px solid #f1f3f5;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+        color: #1a1a1a;
+      }
+
+      header p {
+        color: #666;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .section {
+        margin-bottom: 40px;
+      }
+
+      .section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        border-bottom: 1px solid #f1f3f5;
+        padding-bottom: 8px;
+      }
+
+      .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .skill-tag {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #495057;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      .project {
+        margin-bottom: 20px;
+      }
+
+      .project h3 {
+        font-size: 1.05rem;
+        margin: 0 0 5px 0;
+        color: #343a40;
+      }
+
+      .project p {
+        margin: 0;
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .og-preview {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+        border: 1px solid #e1e4e8;
+        border-radius: 4px;
+      }
+
+      footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #f1f3f5;
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <h1>안녕하세요, 백승호입니다.</h1>
-    <img src="og_priview.png" alt="og_priview">
+    <div class="container">
+      <header>
+        <h1>안녕하세요, 백승호입니다.</h1>
+        <p>기본기에 충실한 백엔드 개발자</p>
+      </header>
+
+      <div class="section">
+        <h2>About</h2>
+        <p>
+          주로 Java와 Spring Boot를 다루며 서버 애플리케이션을 개발하고 있습니다.<br>
+          유지보수하기 좋은 코드와 효율적인 데이터베이스 설계에 관심이 많습니다.<br>
+          단순히 기능을 구현하는 것을 넘어, 문제의 본질을 파악하고 해결하는 과정을 즐깁니다.
+        </p>
+        <!-- 기존 이미지 유지 -->
+        <img src="og_priview.png" alt="og_priview" class="og-preview">
+      </div>
+
+      <div class="section">
+        <h2>Tech Stack</h2>
+        <div class="skill-list">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">JPA</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">Git / GitHub</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Projects</h2>
+        <div class="project">
+          <h3>사내 백오피스 API 개발</h3>
+          <p>- Spring Boot, JPA를 활용한 RESTful API 설계 및 구현</p>
+        </div>
+        <div class="project">
+          <h3>트래픽 분산을 위한 캐싱 처리</h3>
+          <p>- Redis를 도입하여 조회용 API 응답 속도 개선</p>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Email: <a href="mailto:dev.seungho@example.com">dev.seungho@example.com</a> | 
+          GitHub: <a href="#">github.com/seungho-baeg</a>
+        </p>
+        <p>&copy; 2026 Seungho Baeg.</p>
+      </footer>
+    </div>
   </body>
 </html>
