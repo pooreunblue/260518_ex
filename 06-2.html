@@ -1,0 +1,411 @@
+<!doctype html>
+<!-- data-bs-theme="dark" 를 통해 전체적으로 다크 모드(게이밍 스타일) 적용 -->
+<html lang="ko" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TFT 시즌 17.3 덱 추천 서비스</title>
+    <!-- Bootstrap 5.3.8 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* 히어로 섹션 배경을 위한 커스텀 스타일 */
+      .hero-bg {
+        /* TFT에 어울리는 공식 징크스 스플래시 아트로 배경 변경 */
+        background: url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_0.jpg")
+          no-repeat center center;
+        background-size: cover;
+      }
+      /* 챔피언 태그 호버 효과 */
+      .champ-badge:hover {
+        transform: scale(1.1);
+        transition: transform 0.2s;
+        cursor: pointer;
+      }
+      /* 챔피언 스플래시 아트 카드 이미지 비율 맞춤 */
+      .deck-img {
+        height: 200px;
+        object-fit: cover;
+        object-position: top; /* 인물 위주로 보여주기 위해 상단 정렬 */
+      }
+    </style>
+  </head>
+  <body class="pt-5">
+    <!-- 1. Navbar (고정 네비게이션) -->
+    <nav
+      class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm border-bottom border-secondary"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#">TFT.GG</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="06-2.html">메타 덱</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="champion-tier.html">챔피언 티어</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="item-stats.html">아이템 통계</a>
+            </li>
+          </ul>
+          <a
+            href="login.html"
+            class="btn btn-outline-primary ms-lg-3 mt-2 mt-lg-0 fw-bold"
+          >
+            로그인
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 2. Hero Section (챔피언 검색 영역 - Position & Flex) -->
+    <header
+      class="position-relative hero-bg text-white d-flex align-items-center justify-content-center"
+      style="height: 40vh; min-height: 300px"
+    >
+      <!-- 반투명 오버레이 레이어 (absolute 덮어씌우기) -->
+      <div
+        class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75 z-0"
+      ></div>
+
+      <div
+        class="text-center position-relative z-1 px-3 w-100"
+        style="max-width: 600px"
+      >
+        <h1 class="display-5 fw-bold mb-3 text-shadow">
+          시즌 17.3 덱 찾기
+        </h1>
+        <p class="lead mb-4 text-light">
+          플레이하고 싶은 핵심 챔피언을 검색해보세요!
+        </p>
+
+        <!-- 검색 Input Group -->
+        <div class="input-group input-group-lg shadow-lg">
+          <input
+            type="text"
+            id="searchInput"
+            class="form-control bg-body-tertiary text-white border-0"
+            placeholder="예: 킨드레드, 블리츠크랭크, 마스터 이"
+            aria-label="챔피언 검색"
+          />
+          <button
+            class="btn btn-primary fw-bold px-4"
+            id="searchBtn"
+            type="button"
+          >
+            검색
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container my-5">
+      <!-- 3. 추천 덱 리스트 (Grid & Cards) -->
+      <section class="mb-5">
+        <div
+          class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-2"
+        >
+          <h2 class="mb-0 fw-bold" id="resultTitle">시즌 17.3 추천 메타 덱</h2>
+          <button id="resetBtn" class="btn btn-sm btn-outline-secondary d-none">
+            전체 보기
+          </button>
+        </div>
+
+        <!-- 자바스크립트로 덱 카드들이 동적으로 생성될 공간 -->
+        <div class="row g-4" id="deckContainer">
+          <!-- Cards will be injected here -->
+        </div>
+      </section>
+    </main>
+
+    <!-- 4. Modal (상세 보기 팝업) -->
+    <div class="modal fade" id="deckModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-light border-secondary">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title fw-bold text-primary" id="modalDeckName">
+              덱 이름
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              이 덱의 운영법, 아이템 조합, 증강 추천 정보가 들어갈 자리입니다.
+            </p>
+            <div class="p-3 bg-body-tertiary rounded">
+              <strong>핵심 아이템:</strong> 구인수의 격노검, 보석 건틀릿,
+              피바라기
+            </div>
+          </div>
+          <div class="modal-footer border-secondary border-top-0">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Toast (알림 팝업) -->
+    <div
+      class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3 z-3"
+    >
+      <div
+        id="searchToast"
+        class="toast align-items-center text-bg-primary border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body fw-bold" id="toastMessage">
+            검색이 완료되었습니다.
+          </div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Footer -->
+    <footer
+      class="bg-body-tertiary text-light py-4 mt-auto border-top border-secondary"
+    >
+      <div class="container text-center">
+        <p class="mb-1 text-secondary">
+          &copy; 2026 TFT.GG Season 17.3 Example. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.8 JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 검색 로직 및 덱 렌더링 스크립트 -->
+    <script>
+      // 시즌 17.3 덱 데이터베이스 (Mock Data) - 공식 챔피언 스플래시 아트 연동
+      const decks = [
+        {
+          id: 1,
+          name: "NOVA 킨드레드",
+          tier: "S",
+          champs: [
+            "킨드레드",
+            "아칼리",
+            "마오카이",
+            "케이틀린",
+            "아트록스",
+            "벨베스",
+          ],
+          traits: ["NOVA", "도전자", "요새"],
+          img: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kindred_0.jpg",
+        },
+        {
+          id: 2,
+          name: "스페이스 그루브 블리츠크랭크",
+          tier: "S",
+          champs: [
+            "블리츠크랭크",
+            "누누와 윌럼프",
+            "나미",
+            "사미라",
+            "그웬",
+            "티모",
+            "나서스",
+          ],
+          traits: ["스페이스 그루브", "선봉대", "파티 애니멀"],
+          img: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Blitzcrank_0.jpg",
+        },
+        {
+          id: 3,
+          name: "사이오닉 마스터 이",
+          tier: "A",
+          champs: ["마스터 이", "소나", "빅토르", "파이크", "그라가스", "쉔"],
+          traits: ["사이오닉", "습격자", "지휘관"],
+          img: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/MasterYi_0.jpg",
+        },
+        {
+          id: 4,
+          name: "선봉대 누누와 윌럼프",
+          tier: "A",
+          champs: [
+            "누누와 윌럼프",
+            "블리츠크랭크",
+            "일라오이",
+            "모데카이저",
+            "레오나",
+            "나서스",
+          ],
+          traits: ["선봉대", "별바라기", "전도체"],
+          img: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nunu_0.jpg",
+        },
+        {
+          id: 5,
+          name: "태고족 벨베스",
+          tier: "B",
+          champs: ["벨베스", "브라이어", "렉사이", "아칼리", "킨드레드"],
+          traits: ["태고족", "도전자", "습격자"],
+          img: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Belveth_0.jpg",
+        },
+      ];
+
+      const deckContainer = document.getElementById("deckContainer");
+      const searchInput = document.getElementById("searchInput");
+      const searchBtn = document.getElementById("searchBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const resultTitle = document.getElementById("resultTitle");
+
+      const searchToast = document.getElementById("searchToast");
+      const toastMessage = document.getElementById("toastMessage");
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(searchToast);
+
+      // 티어별 색상 반환 함수
+      function getTierColor(tier) {
+        if (tier === "S") return "bg-warning text-dark";
+        if (tier === "A") return "bg-danger";
+        return "bg-info text-dark";
+      }
+
+      // 화면에 덱 리스트를 그려주는 함수 (Flex, Position이 반영된 템플릿)
+      function renderDecks(deckList) {
+        deckContainer.innerHTML = "";
+
+        if (deckList.length === 0) {
+          deckContainer.innerHTML = `<div class="col-12 text-center py-5 text-muted"><h5>해당 챔피언이 포함된 덱을 찾을 수 없습니다.</h5></div>`;
+          return;
+        }
+
+        deckList.forEach((deck) => {
+          const champTags = deck.champs
+            .map(
+              (c) =>
+                `<span class="badge text-bg-secondary champ-badge me-1 mb-1 px-2 py-1">${c}</span>`,
+            )
+            .join("");
+          const traitTags = deck.traits
+            .map(
+              (t) =>
+                `<span class="badge border border-secondary text-light me-1">${t}</span>`,
+            )
+            .join("");
+          const tierColor = getTierColor(deck.tier);
+
+          const html = `
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card h-100 bg-body-tertiary border-secondary shadow-sm position-relative">
+                <!-- Tier Badge (Position Absolute를 통해 카드 좌측 상단에 고정) -->
+                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill ${tierColor} z-2 p-2 shadow-sm fs-6" style="margin-left: 20px;">
+                  ${deck.tier} Tier
+                </span>
+                
+                <img src="${deck.img}" class="card-img-top deck-img opacity-75" alt="${deck.name}">
+                
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title fw-bold mb-2">${deck.name}</h5>
+                  <div class="mb-3">
+                    ${traitTags}
+                  </div>
+                  <!-- Flex 속성(flex-wrap)으로 챔피언 목록이 넘치면 줄바꿈 -->
+                  <div class="d-flex flex-wrap mb-3">
+                    ${champTags}
+                  </div>
+                  <!-- mt-auto를 통해 버튼을 항상 카드 하단에 밀착시킴 -->
+                  <button class="btn btn-outline-info mt-auto fw-bold w-100" data-bs-toggle="modal" data-bs-target="#deckModal" onclick="document.getElementById('modalDeckName').innerText='${deck.name}'">
+                    덱 상세 보기
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          deckContainer.innerHTML += html;
+        });
+      }
+
+      // 초기 전체 덱 렌더링
+      renderDecks(decks);
+
+      // 검색 실행 함수
+      function executeSearch() {
+        const keyword = searchInput.value.trim();
+
+        if (!keyword) {
+          toastMessage.innerText = "검색어를 입력해주세요!";
+          toastMessage.parentElement.parentElement.classList.replace(
+            "text-bg-primary",
+            "text-bg-danger",
+          );
+          toastBootstrap.show();
+          return;
+        }
+
+        // 챔피언 이름 배열을 순회하여 검색어가 포함되어 있는지 필터링
+        const filtered = decks.filter((deck) =>
+          deck.champs.some((c) => c.includes(keyword)),
+        );
+
+        renderDecks(filtered);
+
+        resultTitle.innerHTML = `<span class="text-primary">'${keyword}'</span> 챔피언이 포함된 덱`;
+        resetBtn.classList.remove("d-none");
+
+        toastMessage.innerText =
+          filtered.length > 0
+            ? `${filtered.length}개의 덱을 찾았습니다!`
+            : "검색 결과가 없습니다.";
+        toastMessage.parentElement.parentElement.classList.replace(
+          "text-bg-danger",
+          "text-bg-primary",
+        );
+        toastBootstrap.show();
+      }
+
+      // 이벤트 리스너: 검색 버튼 클릭 시
+      searchBtn.addEventListener("click", executeSearch);
+
+      // 이벤트 리스너: 검색창에서 Enter키 입력 시
+      searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          executeSearch();
+        }
+      });
+
+      // 이벤트 리스너: 전체보기(초기화) 버튼 클릭 시
+      resetBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        resultTitle.innerText = "시즌 17.3 추천 메타 덱";
+        resetBtn.classList.add("d-none");
+        renderDecks(decks);
+      });
+    </script>
+  </body>
+</html>

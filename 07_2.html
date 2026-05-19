@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Tailwind 베이커리 - 오늘의 레시피</title>
+  </head>
+  <!-- pt-16: 고정 네비게이션(h-16)에 가려지지 않도록 상단 패딩 부여 -->
+  <body
+    class="bg-amber-50 text-gray-800 font-sans pt-16 flex flex-col min-h-screen"
+  >
+    <!-- 1. Navbar (Fixed Position, Flexbox) -->
+    <!-- fixed, top-0, z-50: 화면 상단 고정, 레이어 최상단 배치 -->
+    <nav
+      class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-50"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- flex, justify-between: 양 끝 배치 -->
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex-shrink-0 flex items-center cursor-pointer">
+            <span class="text-2xl font-extrabold text-amber-600"
+              >Tailwind Bakery</span
+            >
+          </div>
+
+          <!-- Desktop Menu (모바일에서는 hidden, md 이상에서 flex로 노출) -->
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#"
+              class="text-gray-600 hover:text-amber-600 font-medium transition-colors"
+              >홈</a
+            >
+            <a
+              href="#"
+              class="text-gray-600 hover:text-amber-600 font-medium transition-colors"
+              >레시피</a
+            >
+            <a
+              href="#"
+              class="text-gray-600 hover:text-amber-600 font-medium transition-colors"
+              >베이킹 클래스</a
+            >
+          </div>
+
+          <!-- Right Side (Login Button) -->
+          <div class="flex items-center">
+            <button
+              class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg text-sm font-bold transition-colors"
+            >
+              로그인
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 2. Hero Section (Relative/Absolute Position, Flexbox) -->
+    <!-- relative: 내부 배경 이미지와 오버레이 레이어의 기준점 -->
+    <header
+      class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden"
+    >
+      <!-- Background Image & Dark Overlay (absolute inset-0: top/right/bottom/left 모두 0으로 꽉 채움) -->
+      <img
+        src="https://loremflickr.com/1920/1080/bakery,bread/all"
+        alt="Bakery Background"
+        class="absolute inset-0 w-full h-full object-cover z-0"
+      />
+      <div class="absolute inset-0 bg-black/40 z-10"></div>
+      <!-- 반투명 검은 막 -->
+
+      <!-- Content (z-20으로 최상단으로 끌어올림) -->
+      <div class="relative z-20 text-center px-4 max-w-3xl mx-auto">
+        <h1
+          class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight"
+        >
+          따뜻한 빵과 함께하는 <span class="text-amber-300">행복한 시간</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-200 mb-8">
+          Tailwind Bakery에서 검증된 레시피로 당신의 주방을 채워보세요.
+        </p>
+        <button
+          class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg transition-transform transform hover:scale-105"
+        >
+          오늘의 추천 레시피
+        </button>
+      </div>
+    </header>
+
+    <!-- 3. Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <!-- Section Title -->
+      <div
+        class="flex justify-between items-end mb-8 border-b border-gray-200 pb-4"
+      >
+        <h2 class="text-3xl font-bold text-gray-900">인기 레시피</h2>
+        <a href="#" class="text-amber-600 hover:text-amber-800 font-medium"
+          >전체 보기 &rarr;</a
+        >
+      </div>
+
+      <!-- Recipe Grid (Responsive: 모바일 1칸 -> 태블릿 2칸 -> 데스크탑 3칸) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div
+          class="bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden relative group transition-all duration-300 flex flex-col h-full border border-gray-100"
+        >
+          <!-- Positioned Badge -->
+          <div
+            class="absolute top-4 left-4 z-10 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md"
+          >
+            초급
+          </div>
+          <!-- Image Wrapper -->
+          <div class="relative h-56 overflow-hidden">
+            <img
+              src="https://loremflickr.com/600/400/sourdough,bread/all"
+              alt="Recipe 1"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <!-- Card Body -->
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">
+              클래식 사워도우
+            </h3>
+            <p class="text-gray-500 mb-4 line-clamp-2 flex-grow">
+              겉은 바삭하고 속은 촉촉한, 기본에 충실한 사워도우 레시피입니다.
+              처음 도전하는 분들도 쉽게 따라할 수 있어요.
+            </p>
+            <!-- Recipe Info (Flex) -->
+            <div
+              class="flex justify-between text-sm text-gray-500 border-t pt-4 mt-4"
+            >
+              <span class="font-medium">예상 시간: 8시간</span>
+              <span class="font-medium">난이도: ★☆☆</span>
+            </div>
+            <button
+              class="mt-4 w-full bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-lg font-bold transition-colors"
+            >
+              레시피 보기
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden relative group transition-all duration-300 flex flex-col h-full border border-gray-100"
+        >
+          <div
+            class="absolute top-4 left-4 z-10 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md"
+          >
+            중급
+          </div>
+          <div class="relative h-56 overflow-hidden">
+            <img
+              src="https://loremflickr.com/600/400/croissant/all"
+              alt="Recipe 2"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">버터 크루아상</h3>
+            <p class="text-gray-500 mb-4 line-clamp-2 flex-grow">
+              결이 살아있는 프랑스 정통 크루아상. 버터의 풍미를 가득 느껴보세요.
+            </p>
+            <div
+              class="flex justify-between text-sm text-gray-500 border-t pt-4 mt-4"
+            >
+              <span class="font-medium">예상 시간: 2일</span>
+              <span class="font-medium">난이도: ★★☆</span>
+            </div>
+            <button
+              class="mt-4 w-full bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-lg font-bold transition-colors"
+            >
+              레시피 보기
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden relative group transition-all duration-300 flex flex-col h-full border border-gray-100"
+        >
+          <div
+            class="absolute top-4 left-4 z-10 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md"
+          >
+            고급
+          </div>
+          <div class="relative h-56 overflow-hidden">
+            <img
+              src="https://loremflickr.com/600/400/macaron/all"
+              alt="Recipe 3"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">
+              라즈베리 마카롱
+            </h3>
+            <p class="text-gray-500 mb-4 line-clamp-2 flex-grow">
+              섬세한 기술이 필요한 마카롱 꼬끄와 상큼한 라즈베리 필링의 조화.
+            </p>
+            <div
+              class="flex justify-between text-sm text-gray-500 border-t pt-4 mt-4"
+            >
+              <span class="font-medium">예상 시간: 4시간</span>
+              <span class="font-medium">난이도: ★★★</span>
+            </div>
+            <button
+              class="mt-4 w-full bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-lg font-bold transition-colors"
+            >
+              레시피 보기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Promo Banner (Flex, Adaptive) -->
+      <section
+        class="mt-16 bg-amber-100 rounded-2xl border border-amber-200 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between shadow-sm"
+      >
+        <div class="mb-6 md:mb-0 text-center md:text-left">
+          <h3 class="text-2xl md:text-3xl font-extrabold text-amber-900 mb-2">
+            원데이 베이킹 클래스 오픈!
+          </h3>
+          <p class="text-amber-800 text-lg">
+            전문 파티시에와 함께하는 특별한 하루. 지금 바로 신청하세요.
+          </p>
+        </div>
+        <button
+          class="w-full md:w-auto bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-xl font-bold shadow-md transition-all"
+        >
+          클래스 신청하기
+        </button>
+      </section>
+    </main>
+
+    <!-- 5. Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-sm">&copy; 2026 Tailwind Bakery. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>아이템 통계 - TFT.GG</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="pt-5 d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm border-bottom border-secondary"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="06-2.html">TFT.GG</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="06-2.html">메타 덱</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="champion-tier.html">챔피언 티어</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="item-stats.html">아이템 통계</a>
+            </li>
+          </ul>
+          <a
+            href="login.html"
+            class="btn btn-outline-primary ms-lg-3 mt-2 mt-lg-0 fw-bold"
+            >로그인</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1">
+      <h2 class="fw-bold mb-4 border-bottom border-secondary pb-2">
+        시즌 17.3 아이템 통계
+      </h2>
+
+      <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+          <thead>
+            <tr>
+              <th scope="col">아이템</th>
+              <th scope="col">픽률</th>
+              <th scope="col">승률</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src="https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3124.png"
+                  width="40"
+                  class="me-2 rounded"
+                />
+                구인수의 격노검
+              </td>
+              <td class="text-info">15.4%</td>
+              <td class="text-success">54.2%</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3089.png"
+                  width="40"
+                  class="me-2 rounded"
+                />
+                라바돈의 죽음모자
+              </td>
+              <td class="text-info">12.1%</td>
+              <td class="text-success">52.8%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-body-tertiary text-light py-4 mt-auto border-top border-secondary"
+    >
+      <div class="container text-center">
+        <p class="mb-1 text-secondary">&copy; 2026 TFT.GG Example.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
